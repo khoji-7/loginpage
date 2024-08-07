@@ -41,8 +41,8 @@ function LoginPage(){
     return(
         <>
         <form onSubmit={login}>
-            <input type="text" onChange={(e)=> setnumber(e?.target?.value)} required minLength={3}/>
-            <input type="text" onChange={(e)=> setpasword(e?.target?.value)}  required minLength={3} />
+            <input type="text" onChange={(e)=> setnumber(e?.target?.value)} required minLength={3} placeholder="900474227"/>
+            <input type="text" onChange={(e)=> setpasword(e?.target?.value)}  required minLength={3} placeholder="cuperadmin"/>
             <button>
                 login 
             </button>
