@@ -65,7 +65,7 @@ function HomePage() {
             <button onClick={modalFunc}>modal ochish</button>
             {openModal && (
                 <div className="modal">
-                    <h1>modal</h1>
+                    <h1>Modal</h1>
                     <form onSubmit={createCategory}>
                         <input type="text" required placeholder="name en" onChange={(e) => setNameEn(e?.target?.value)} />
                         <input type="text" required placeholder="name ru" onChange={(e) => setNameRu(e?.target?.value)} />

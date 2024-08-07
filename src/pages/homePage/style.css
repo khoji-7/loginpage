@@ -24,3 +24,36 @@
     width: 100px;
     height: 100px;
   }
+  .modal{
+    display: flex;
+    flex-direction: column;
+    width: 500px;
+    height: auto;
+    margin: auto;
+    padding: 10px;
+    border-radius: 20px;
+    background-color: rgb(186, 180, 180);
+    gap: 10px;
+    align-items: center;
+  }
+  form{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+  }
+  button{
+    padding: auto;
+    width: 200px;
+    height: 30px;
+    background-color: rgb(41, 131, 195);
+    color: white;
+    border-radius: 10px;
+    border: none;
+  }
+  input{
+    width: 200px;
+    height: 30px;
+    border-radius: 10px;
+    margin-left: 10px
+  }
