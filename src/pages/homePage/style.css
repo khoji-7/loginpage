@@ -57,3 +57,7 @@
     border-radius: 10px;
     margin-left: 10px
   }
+  .homeContainer{
+    display: flex;
+    flex-direction: column;
+  }

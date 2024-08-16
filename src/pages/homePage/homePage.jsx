@@ -103,8 +103,8 @@ function HomePage() {
     };
 
     return (
-        <>
-            home page
+        <div div className="homeContainer">
+            
             <button onClick={logout}>log Out</button>
             <button onClick={modalFunc}>modal ochish</button>
 
@@ -173,7 +173,7 @@ function HomePage() {
                     ))}
                 </tbody>
             </table>
-        </>
+        </div>
     );
 }
 
