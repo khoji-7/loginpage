@@ -5,4 +5,5 @@ p{
   display: flex;
   flex-direction: row;
   gap: 2vw;
+  background-color: #f1faee;
 }

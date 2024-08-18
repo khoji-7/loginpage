@@ -1,12 +1,19 @@
 #customers {
+   margin-top: 20px;
     font-family: Arial, Helvetica, sans-serif;
-    border-collapse: collapse;
-    width: 100%;
+    width: 70vw;
+  }
+  #customers th{
+    background-color: #A3CEF1;
+
   }
   
-  #customers td, #customers th {
-    border: 1px solid #ddd;
-    padding: 8px;
+  #customers td{
+    width: 200px;
+    padding: 10px;
+    background-color: #E7ECEF;
+    gap: 20px;
+
   }
   
   #customers tr:nth-child(even){background-color: #f2f2f2;}
@@ -17,47 +24,176 @@
     padding-top: 12px;
     padding-bottom: 12px;
     text-align: left;
-    background-color: #04AA6D;
-    color: white;
+    color: #4679b3;
   }
-  img{
-    width: 100px;
-    height: 100px;
-  }
-  .modal{
+  .homeContainer {
+    position: relative;
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(175, 174, 174, 0.5);
+    backdrop-filter: blur(1px);
+    z-index: 999;
+}
+
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    z-index: 1000;
     display: flex;
     flex-direction: column;
     width: 500px;
     height: auto;
-    margin: auto;
-    padding: 10px;
+    margin: 20px auto;
     border-radius: 20px;
-    background-color: rgb(186, 180, 180);
+    background-color: #A3CEF1;
     gap: 10px;
     align-items: center;
+}
+
+  img{
+    width: 150px;
+    height: 150px;
   }
+  
   form{
     display: flex;
     flex-direction: column;
     gap: 10px;
     align-items: center;
   }
-  button{
+  .homePageBtn{
     padding: auto;
-    width: 200px;
+    width: 130px;
+    margin-top: 10px;
     height: 30px;
-    background-color: rgb(41, 131, 195);
+    background-color: #4679b3;
     color: white;
     border-radius: 10px;
     border: none;
+  }
+  .homePageBtn:hover{
+    background-color: #274c77;
   }
   input{
     width: 200px;
     height: 30px;
     border-radius: 10px;
-    margin-left: 10px
+    margin-left: 10px;
+    border: none;
+    background-color: #E7ECEF;
   }
   .homeContainer{
     display: flex;
     flex-direction: column;
   }
+  @media (max-width: 1024px) {
+    .modal {
+        width: 90%;
+        padding: 15px;
+    }
+
+    input {
+        width: 90%;
+    }
+
+    .homePageBtn {
+        width: 90%;
+    }
+
+    #customers th, #customers td {
+        padding: 6px;
+    }
+
+    img {
+        width: 80px;
+        height: 80px;
+    }
+}
+
+  @media (max-width: 768px) {
+    .modal {
+        width: 90%;
+        padding: 15px;
+    }
+
+    input {
+        width: 90%;
+    }
+
+    .homePageBtn {
+        width: 90%;
+    }
+
+    #customers th, #customers td {
+        padding: 6px;
+    }
+
+    img {
+        width: 80px;
+        height: 80px;
+    }
+}
+
+/* Media Query for devices with width up to 480px (mobile phones) */
+@media (max-width: 480px) {
+    .modal {
+        width: 95%;
+        padding: 10px;
+    }
+
+    input {
+        width: 95%;
+    }
+
+    .homePageBtn {
+        width: 95%;
+    }
+    #customers{
+      display: flex;
+      flex-direction: column;
+    }
+    #customers th, #customers td {
+        padding: 4px;
+    }
+
+    img {
+        width: 60px;
+        height: 60px;
+    }
+}
+@media (max-width: 320px) {
+  .modal {
+      width: 95%;
+      padding: 10px;
+  }
+
+  input {
+      width: 95%;
+  }
+
+  .homePageBtn {
+      width: 95%;
+  }
+  
+
+  #customers th, #customers td {
+      padding: 2px;
+      font-size: 12px;
+  }
+
+  img {
+      width: 40px;
+      height: 40px;
+  }
+}
