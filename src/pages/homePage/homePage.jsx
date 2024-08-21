@@ -2,6 +2,8 @@ import { useNavigate } from "react-router-dom";
 import "./style.css";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 
 function HomePage() {
     let navigate = useNavigate();
@@ -23,6 +25,10 @@ function HomePage() {
     const [openModal, setOpenModal] = useState(false);
     const modalFunc = () => {
         setOpenModal(true);
+        // Formani tozalash
+        setNameEn("");
+        setNameRu("");
+        setImg(null);
     };
 
     const [nameEn, setNameEn] = useState("");
@@ -54,39 +60,56 @@ function HomePage() {
                     toast.error(dat?.message);
                 }
             })
-            .catch((error) => console.error("Error:", error));
-    };
-
-    // delete api 
-    const deleteCategory = (id) => {
-        fetch(`https://autoapi.dezinfeksiyatashkent.uz/api/categories/${id}`, {
-            method: "DELETE",
-            headers: {
-                'Authorization': `Bearer ${localStorage.getItem('tokenbek')}`,
-            },
-        }).then((res) => res.json())
-            .then((data) => {
-                console.log(data, "dataa");
-                setRefresh(!refresh); // Delete'dan keyin refresh'ni yangilang
+            .catch((error) => {
+                console.error("Error:", error);
+                toast.error("Something went wrong, please try again.");
             });
     };
 
-    // edit api
+    const deleteCategory = (id) => {
+        if (window.confirm("Are you sure you want to delete this category?")) {
+            fetch(`https://autoapi.dezinfeksiyatashkent.uz/api/categories/${id}`, {
+                method: "DELETE",
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('tokenbek')}`,
+                },
+            })
+            .then((res) => res.json())
+            .then((data) => {
+                toast.success("Category deleted successfully.");
+                setRefresh(!refresh);
+            })
+            .catch((error) => {
+                console.error("Error:", error);
+                toast.error("Failed to delete category.");
+            });
+        }
+    };
+
     const [editId, setEditId] = useState();
     const [editModal, setEditModal] = useState(false);
-    const editModalFunc = (id) => {
+    const [editNameEn, setEditNameEn] = useState("");
+    const [editNameRu, setEditNameRu] = useState("");
+    const [editImg, setEditImg] = useState(null);
+
+    const editModalFunc = (id, nameEn, nameRu, img) => {
         setOpenModal(false);
         setEditModal(true);
         setEditId(id);
+        setEditNameEn(nameEn);
+        setEditNameRu(nameRu);
+        setEditImg(img);
     };
 
     const editFunc = (e) => {
         e.preventDefault();
 
         const formData = new FormData();
-        formData.append("name_en", nameEn);
-        formData.append("name_ru", nameRu);
-        formData.append("images", img);
+        formData.append("name_en", editNameEn);
+        formData.append("name_ru", editNameRu);
+        if (editImg) {
+            formData.append("images", editImg);
+        }
 
         fetch(`https://autoapi.dezinfeksiyatashkent.uz/api/categories/${editId}`, {
             method: "PUT",
@@ -94,48 +117,51 @@ function HomePage() {
                 'Authorization': `Bearer ${localStorage.getItem('tokenbek')}`,
             },
             body: formData,
-        }).then((response) => response.json())
-            .then((elem) => {
-                console.log(elem);
-                setEditModal(false);
-                setRefresh(!refresh); // Edit'dan keyin refresh'ni yangilang
-            });
+        })
+        .then((response) => response.json())
+        .then((elem) => {
+            toast.success("Category updated successfully.");
+            setEditModal(false);
+            setRefresh(!refresh);
+        })
+        .catch((error) => {
+            console.error("Error:", error);
+            toast.error("Failed to update category.");
+        });
     };
 
     return (
-        <div div className="homeContainer" >
-            
+        <div className="homeContainer">
             {(openModal || editModal) && <div className="modal-overlay"></div>}
 
-
-            {openModal ? (
+            {openModal && (
                 <div className="modal">
                     <h1>Modal</h1>
                     <form onSubmit={createCategory}>
-                        <input type="text" required placeholder="name en" onChange={(e) => setNameEn(e?.target?.value)} />
-                        <input type="text" required placeholder="name ru" onChange={(e) => setNameRu(e?.target?.value)} />
-                        <input type="file" required placeholder="img" onChange={(e) => setImg(e?.target?.files[0])} accept="image/png, image/jpeg" />
+                        <input type="text" value={nameEn} required placeholder="Name EN" onChange={(e) => setNameEn(e.target.value)} />
+                        <input type="text" value={nameRu} required placeholder="Name RU" onChange={(e) => setNameRu(e.target.value)} />
+                        <input type="file" onChange={(e) => setImg(e.target.files[0])} accept="image/png, image/jpeg" />
                         <button type="submit" className="homePageBtn">
-                            qoshish
+                            Add
                         </button>
                     </form>
                     <button className="homePageBtn" onClick={() => setOpenModal(false)}>Close</button>
                 </div>
-            ) : editModal ? (
+            )}
+
+            {editModal && (
                 <div className="modal">
                     <h1>Edit</h1>
                     <form onSubmit={editFunc}>
-                        <input type="text" required placeholder="name en" onChange={(e) => setNameEn(e?.target?.value)} />
-                        <input type="text" required placeholder="name ru" onChange={(e) => setNameRu(e?.target?.value)} />
-                        <input type="file" required placeholder="img" onChange={(e) => setImg(e?.target?.files[0])} accept="image/png, image/jpeg" />
+                        <input type="text" value={editNameEn} required placeholder="Name EN" onChange={(e) => setEditNameEn(e.target.value)} />
+                        <input type="text" value={editNameRu} required placeholder="Name RU" onChange={(e) => setEditNameRu(e.target.value)} />
+                        <input type="file" onChange={(e) => setEditImg(e.target.files[0])} accept="image/png, image/jpeg" />
                         <button type="submit" className="homePageBtn">
-                            edit
+                            Edit
                         </button>
                     </form>
-                    <button onClick={() => setEditModal(false)} className="homePageBtn">Close</button>
+                    <button className="homePageBtn" onClick={() => setEditModal(false)}>Close</button>
                 </div>
-            ) : (
-                ""
             )}
 
             <table id="customers">
@@ -144,35 +170,33 @@ function HomePage() {
                         <th>Company</th>
                         <th>Contact</th>
                         <th>Country</th>
-                        <th>Holati</th>
-                        
-                        <th>            <button className="homePageBtn" onClick={modalFunc}>Add</button>
-</th>
+                        <th>Status</th>
+                        <th>
+                            <button className="homePageBtn" onClick={modalFunc}>Add</button>
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
-                    {data?.map((item, i) => (
-                        <tr key={i}>
+                    {data?.map((item) => (
+                        <tr key={item?.id}>
                             <td>{item?.name_en}</td>
                             <td>{item?.name_ru}</td>
                             <td>
-                                <img
+                                <img className="tdImage"
                                     src={`https://autoapi.dezinfeksiyatashkent.uz/api/uploads/images/${item?.image_src}`}
                                     alt=""
                                 />
                             </td>
                             <td>
-                                <button className="homePageBtn" onClick={() => deleteCategory(item?.id)}>
-                                    delete
+                                <button className="statusBtn" onClick={() => deleteCategory(item?.id)}>
+                                    <DeleteIcon/>
                                 </button>
-                                
                             </td>
                             <td>
-                            <button className="homePageBtn" onClick={() => editModalFunc(item?.id)}>
-                                    edit
+                                <button className="statusBtn" onClick={() => editModalFunc(item?.id, item?.name_en, item?.name_ru, item?.image_src)}>
+                                    <EditIcon/>
                                 </button>
                             </td>
-                            
                         </tr>
                     ))}
                 </tbody>
