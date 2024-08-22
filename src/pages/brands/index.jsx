@@ -12,6 +12,7 @@ function BrandsPage() {
     };
 
     const [data, setData] = useState([]);
+    
     const [refresh, setRefresh] = useState(false);
 
     useEffect(() => {
