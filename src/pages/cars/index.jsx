@@ -95,6 +95,7 @@ function CarsPage() {
     const [priceAedIn, setPriceAedIn] = useState("");
     const [priceUs, setPricaUs] = useState("");
     const [priceUsIn, setPriceUsIn] = useState("");
+    const [checked, setChecked] = useState(false);
     const [price, setPrice] = useState("");
     const [image, setImage] = useState("");
     const [image1, setImage1] = useState("");
@@ -140,6 +141,8 @@ function CarsPage() {
         formData.append("price_in_usd", priceUs);
         formData.append("price_in_usd_sale", priceUsIn);
         formData.append("premium_protection", price);
+        formData.append("inclusive", checked);
+
         if (image) formData.append("car_images[0]?.image", image);
         if (image1) formData.append("car_images[1]?.image", image1);
         if (image2) formData.append("car_images[2]?.image", image2);
@@ -196,7 +199,7 @@ function CarsPage() {
     const [editName, setEditName] = useState("");
     const [editBrand, setEditBrand] = useState("");
 
-    const editModalFunc = (setEditBrand, setEditCategory, setEditModel,setEditLocation,setEditCity,setEditColor,setEditYear,setEditSecond,setEditSpeed,setEditPeople,setEditMotor,setEditTransmission,setEditSide) => {
+    const editModalFunc = (setEditBrand,setEditPriceAedIn,setEditPriceUs,setEditPriceUsIn, setEditPrice, setEditImage2, setEditImage, setEditImage1, setEditDeposite,setEditPriceAed,  setEditCategory, setEditModel,setEditLocation,setEditCity,setEditColor,setEditYear,setEditSecond,setEditSpeed,setEditPeople,setEditMotor,setEditTransmission,setEditSide,setEditPetrol,setEditDay) => {
         const model = item.data;
         setEditBrand(model.brand_id);
         setEditCategory(model.category_id);
